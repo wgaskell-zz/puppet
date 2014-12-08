@@ -1,0 +1,23 @@
+  node default {
+    notify {"Helloworld":}
+    package {'apache2':
+      ensure => present,
+    }
+
+    include '::mysql::server'  
+
+  class { 'mysql::server':
+    config_hash => {
+       'root_password' => '1234qwer'
+    }
+}
+
+mysql::db { 'data_base':
+    user     => '1020198',
+    password => 'wayne2013',
+    host     => 'localhost',
+    grant    => ['all'],
+    charset => 'utf8',
+    require => File['/root/.my.cnf'],
+  }
+}
